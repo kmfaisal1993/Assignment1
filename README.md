@@ -2,56 +2,36 @@
 # Import necessary libraries
 
 from selenium import webdriver
-
 from selenium.webdriver.chrome.service import Service
-
 from selenium.webdriver.chrome.options import Options
-
 from webdriver_manager.chrome import ChromeDriverManager
-
 from selenium.webdriver.common.by import By
-
 from selenium.webdriver.support.ui import WebDriverWait
-
 from selenium.webdriver.support import expected_conditions as EC
-
 import datetime
-
 import openpyxl
-
 import time
 
 # Define the file path for Excel file on the desktop
-
 excel_file_path = 'C:/Users\Windows 10\Desktop/New folder (2)/Web-Automation01/Q1/test.xlsx'
 
 # Get the current date and day of the week
-
 current_date = datetime.date.today()
-
 current_day = current_date.strftime('%A')
-
 print(f"Current Day: {current_day}")
 
 # Configure Chrome options
-
 options = Options()
-
 options.add_experimental_option("detach", True)  # Prevent the browser from closing automatically
-
 options.add_argument("--incognito")  # Add incognito mode for browsing privacy
 
-
 # Initialize the WebDriver using ChromeDriverManager to handle driver installation
-
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
 # Load the Excel file
-
     # Load the Excel workbook and open the sheet corresponding to the current day of the week
     try:
-    workbook = openpyxl.load_workbook(excel_file_path, data_only=True)
-    
+    workbook = openpyxl.load_workbook(excel_file_path, data_only=True)    
     if current_day in workbook.sheetnames:
         sheet = workbook[current_day]
 
@@ -130,19 +110,13 @@ driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), opti
 
     else:
         print(f"No sheet found for '{current_day}' in the Excel file.")
+        
 # Error Handling 
-
-  except FileNotFoundError:
-
-    print(f"Excel file not found at '{excel_file_path}'. Please check the file path.")
-    
-  except Exception as e:
-
-    print(f"An error occurred: {str(e)}")   
-    
-  finally:
-
-    # Close the web browser
-    
+except FileNotFoundError:
+    print(f"Excel file not found at '{excel_file_path}'. Please check the file path.")    
+except Exception as e:
+    print(f"An error occurred: {str(e)}")      
+finally:
+    # Close the web browser    
     driver.quit()
 
